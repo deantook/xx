@@ -1,142 +1,125 @@
-# DeepSeek CLI 对话工具
+# DeepSeek CLI
+
+[![Go Version](https://img.shields.io/badge/go-1.25+-blue.svg)](https://golang.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/deantook/xx.svg)](https://github.com/deantook/xx/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/deantook/xx)](https://goreportcard.com/report/github.com/deantook/xx)
+[![Build Status](https://github.com/deantook/xx/workflows/Go/badge.svg)](https://github.com/deantook/xx/actions)
+[![Docker](https://img.shields.io/docker/v/deantook/xx?label=docker)](https://hub.docker.com/r/deantook/xx)
 
 一个基于 Go 的命令行工具，用于与 DeepSeek API 进行交互式对话。
 
-## 功能特性
+## ✨ 功能特性
 
-- 🤖 与 DeepSeek AI 进行交互式对话
-- 💬 支持多轮对话历史
-- 🌊 流式输出，实时显示 AI 回复
-- 🔧 支持自定义 API URL 和模型
-- 🎯 简洁的命令行界面
-- ⚙️ 支持自定义系统提示词，控制 AI 回答格式
+- 🤖 **交互式对话** - 与 DeepSeek AI 进行自然对话
+- 💬 **多轮对话** - 支持上下文记忆的连续对话
+- 🌊 **流式输出** - 实时显示 AI 回复，提升用户体验
+- 🔧 **灵活配置** - 支持自定义 API URL 和模型选择
+- 🎯 **简洁界面** - 直观的命令行交互界面
+- ⚙️ **系统提示词** - 自定义 AI 行为模式
+- 📝 **历史管理** - 保存、加载和管理对话历史
+- 🔍 **配置持久化** - 自动保存和加载配置信息
 
-## 安装
+## 🚀 快速开始
 
-### 从源码构建
+### 安装
 
-1. 克隆或下载项目代码
-2. 安装依赖：
-   ```bash
-   go mod tidy
-   ```
-3. 构建程序：
-   ```bash
-   go build -o deepseek-cli
-   ```
+#### 使用 go install（推荐）
 
-## 使用方法
-
-### 1. 设置 API Key
-
-有多种方式设置 API Key（按优先级排序）：
-
-**方式一：配置文件（推荐）**
 ```bash
-# 首次运行时会自动提示输入并保存
-./deepseek-cli
-
-# 或使用配置命令设置
-./deepseek-cli config set api-key "your-api-key-here"
+go install github.com/deantook/xx@latest
 ```
 
-**方式二：环境变量**
+#### 从源码构建
+
+```bash
+git clone https://github.com/deantook/xx.git
+cd xx
+go mod tidy
+go build -o xx
+```
+
+#### 使用 Docker
+
+```bash
+docker run -it --rm deantook/xx:latest
+```
+
+### 配置 API Key
+
+首次使用时，程序会提示您输入 DeepSeek API Key：
+
+```bash
+xx
+# 程序会提示输入 API Key
+```
+
+或者使用环境变量：
+
 ```bash
 export DEEPSEEK_API_KEY="your-api-key-here"
+xx
 ```
 
-**方式三：命令行参数**
-```bash
-./deepseek-cli --api-key "your-api-key-here"
-```
-
-### 2. 运行程序
+### 开始对话
 
 ```bash
-./deepseek-cli
+xx
 ```
 
-### 3. 开始对话
+## 📖 使用指南
 
-程序启动后，你可以直接输入问题与 DeepSeek AI 对话：
+### 基本命令
 
-```
-🤖 DeepSeek CLI 对话工具
-输入 'exit' 或 'quit' 退出，输入 'clear' 清空对话历史
-================================================
-👤 你: 你好，请介绍一下你自己
-🤖 DeepSeek: 你好！我是 DeepSeek，一个由深度求索公司开发的 AI 助手...
-
-👤 你: 你能帮我写一个 Python 函数吗？
-🤖 DeepSeek: 当然可以！请告诉我你需要什么样的 Python 函数...
-```
-
-### 4. 特殊命令
-
-- `exit` 或 `quit`: 退出程序
-- `clear`: 清空当前对话历史
-
-### 5. 配置管理
-
-程序提供了完整的配置管理功能：
-
-**查看当前配置**
 ```bash
-./deepseek-cli config show
+# 启动交互式对话
+xx
+
+# 查看帮助
+xx --help
+
+# 配置管理
+xx config show          # 显示当前配置
+xx config set api-key "your-key"  # 设置 API Key
+xx config clear         # 清空配置
+
+# 历史记录管理
+xx history list         # 列出所有历史记录
+xx history show <file>   # 查看历史记录内容
+xx history delete <file> # 删除历史记录
+xx history clear        # 清空所有历史记录
 ```
 
-**设置配置项**
+### 交互式命令
+
+在对话过程中，您可以使用以下命令：
+
+- `exit` 或 `quit` - 退出程序
+- `clear` - 清空当前对话历史
+- `save <标题>` - 保存当前对话
+- `load <文件名>` - 加载历史对话
+- `list` - 查看所有历史记录
+
+### 配置选项
+
 ```bash
-# 设置 API Key
-./deepseek-cli config set api-key "your-api-key-here"
-
-# 设置基础 URL
-./deepseek-cli config set base-url "https://api.deepseek.com"
-
-# 设置模型
-./deepseek-cli config set model "deepseek-chat"
-
-# 设置系统提示词
-./deepseek-cli config set system-prompt "你是一个专业的编程助手。请用纯文本格式回答，不要使用Markdown。"
+xx --api-key "your-key"           # API Key
+xx --base-url "https://api.deepseek.com"  # API 基础 URL
+xx --model "deepseek-chat"        # 使用的模型
+xx --system-prompt "你是一个专业的编程助手"  # 系统提示词
 ```
 
-**清空配置**
-```bash
-./deepseek-cli config clear
-```
+## 🔧 配置
 
 配置文件位置：`~/.deepseek-cli/config.json`
 
-## 命令行参数
+支持的配置项：
+- `api-key`: DeepSeek API Key
+- `base-url`: API 基础 URL（默认：https://api.deepseek.com）
+- `model`: 使用的模型（默认：deepseek-chat）
+- `system-prompt`: 系统提示词
 
-```bash
-./deepseek-cli [选项]
-
-选项:
-  --api-key string         DeepSeek API Key (也可以通过 DEEPSEEK_API_KEY 环境变量设置)
-  --base-url string        DeepSeek API 基础 URL (默认: https://api.deepseek.com)
-  --model string           使用的模型名称 (默认: deepseek-chat)
-  --system-prompt string   系统提示词
-```
-
-## 示例用法
-
-### 使用自定义模型
-```bash
-./deepseek-cli --model deepseek-reasoner
-```
-
-### 使用自定义 API URL
-```bash
-./deepseek-cli --base-url https://your-custom-api.com
-```
-
-### 使用自定义系统提示词
-```bash
-./deepseek-cli --system-prompt "你是一个专业的编程助手。请用纯文本格式回答，不要使用Markdown。"
-```
-
-## 项目结构
+## 📁 项目结构
 
 ```
 .
@@ -148,34 +131,59 @@ export DEEPSEEK_API_KEY="your-api-key-here"
 │   └── deepseek.go     # DeepSeek API 客户端
 ├── chat/
 │   └── session.go      # 对话会话管理
+├── config/
+│   └── config.go       # 配置管理
+├── history/
+│   └── history.go      # 历史记录管理
+├── .github/workflows/  # GitHub Actions
+├── Dockerfile          # Docker 配置
+├── LICENSE             # MIT 许可证
+├── CONTRIBUTING.md     # 贡献指南
+├── CHANGELOG.md        # 更新日志
+├── SECURITY.md         # 安全政策
+├── FAQ.md              # 常见问题
 └── README.md           # 项目说明
 ```
 
-## 依赖
+## 🤝 贡献
 
-- [cobra](https://github.com/spf13/cobra): CLI 框架
-- Go 标准库
+我们欢迎任何形式的贡献！请查看 [CONTRIBUTING.md](CONTRIBUTING.md) 了解如何参与项目开发。
 
-## 注意事项
+### 开发环境设置
 
-1. 请确保你有有效的 DeepSeek API Key
-2. 程序使用流式输出，AI 回复会实时显示
-3. 对话历史会保存在内存中，重启程序后会丢失
-4. 支持多轮对话，AI 会记住之前的对话内容
+1. 安装 Go 1.25+
+2. Fork 并克隆项目
+3. 安装依赖：`go mod tidy`
+4. 运行测试：`go test ./...`
+5. 构建项目：`go build -o xx`
 
-## 故障排除
+## 📄 许可证
 
-### API Key 错误
-如果遇到 API Key 相关错误，请检查：
-- 环境变量 `DEEPSEEK_API_KEY` 是否正确设置
-- API Key 是否有效且未过期
+本项目采用 [MIT 许可证](LICENSE)。
 
-### 网络连接问题
-如果遇到网络连接问题，请检查：
-- 网络连接是否正常
-- API URL 是否正确
-- 防火墙设置是否阻止了连接
+## 🔗 相关链接
 
-## 许可证
+- [DeepSeek API 文档](https://platform.deepseek.com/api-docs/)
+- [Go 官方文档](https://golang.org/doc/)
+- [Cobra CLI 框架](https://github.com/spf13/cobra)
 
-本项目采用 MIT 许可证。
+## 📊 项目状态
+
+- ✅ 基础对话功能
+- ✅ 流式输出
+- ✅ 配置管理
+- ✅ 历史记录
+- ✅ 多模型支持
+- 🔄 持续改进中...
+
+## ❓ 常见问题
+
+遇到问题？请查看 [FAQ.md](FAQ.md) 获取常见问题的解答。
+
+## 🔒 安全
+
+请查看 [SECURITY.md](SECURITY.md) 了解安全政策和报告漏洞的方式。
+
+---
+
+如果这个项目对您有帮助，请给我们一个 ⭐️！

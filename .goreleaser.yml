@@ -1,0 +1,88 @@
+# GoReleaser configuration
+# See https://goreleaser.com/customization/ for more information
+
+project_name: xx
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    main: ./main.go
+    binary: xx
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+archives:
+  - format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_checksums.txt"
+
+snapshot:
+  name_template: "{{ .ProjectName }}_{{ .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+release:
+  github:
+    owner: deantook
+    name: xx
+  draft: false
+  prerelease: auto
+  mode: replace
+  header: |
+    ## 更新日志
+
+    这是 {{ .ProjectName }} 的 {{ .Tag }} 版本。
+
+  footer: |
+    ## 安装
+
+    下载适合您系统的二进制文件，然后：
+
+    ```bash
+    # Linux/macOS
+    chmod +x xx
+    ./xx
+
+    # Windows
+    xx.exe
+    ```
+
+    ## 使用 go install 安装
+
+    ```bash
+    go install github.com/deantook/xx@{{ .Tag }}
+    ```
+
+dockers:
+  - image_templates:
+      - "deantook/xx:{{ .Version }}"
+      - "deantook/xx:latest"
+    dockerfile: Dockerfile
+    goos: linux
+    goarch: amd64
+    build_flag_templates:
+      - --label=org.opencontainers.image.title={{ .ProjectName }}
+      - --label=org.opencontainers.image.description={{ .ProjectName }}
+      - --label=org.opencontainers.image.url=https://github.com/deantook/xx
+      - --label=org.opencontainers.image.source=https://github.com/deantook/xx
+      - --label=org.opencontainers.image.version={{ .Version }}
+      - --label=org.opencontainers.image.created={{ .Date }}
+      - --label=org.opencontainers.image.revision={{ .FullCommit }}
+      - --label=org.opencontainers.image.licenses=MIT
