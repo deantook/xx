@@ -9,6 +9,7 @@
 - 🌊 流式输出，实时显示 AI 回复
 - 🔧 支持自定义 API URL 和模型
 - 🎯 简洁的命令行界面
+- ⚙️ 支持自定义系统提示词，控制 AI 回答格式
 
 ## 安装
 
@@ -94,6 +95,9 @@ export DEEPSEEK_API_KEY="your-api-key-here"
 
 # 设置模型
 ./deepseek-cli config set model "deepseek-chat"
+
+# 设置系统提示词
+./deepseek-cli config set system-prompt "你是一个专业的编程助手。请用纯文本格式回答，不要使用Markdown。"
 ```
 
 **清空配置**
@@ -109,9 +113,10 @@ export DEEPSEEK_API_KEY="your-api-key-here"
 ./deepseek-cli [选项]
 
 选项:
-  --api-key string    DeepSeek API Key (也可以通过 DEEPSEEK_API_KEY 环境变量设置)
-  --base-url string   DeepSeek API 基础 URL (默认: https://api.deepseek.com)
-  --model string      使用的模型名称 (默认: deepseek-chat)
+  --api-key string         DeepSeek API Key (也可以通过 DEEPSEEK_API_KEY 环境变量设置)
+  --base-url string        DeepSeek API 基础 URL (默认: https://api.deepseek.com)
+  --model string           使用的模型名称 (默认: deepseek-chat)
+  --system-prompt string   系统提示词
 ```
 
 ## 示例用法
@@ -124,6 +129,11 @@ export DEEPSEEK_API_KEY="your-api-key-here"
 ### 使用自定义 API URL
 ```bash
 ./deepseek-cli --base-url https://your-custom-api.com
+```
+
+### 使用自定义系统提示词
+```bash
+./deepseek-cli --system-prompt "你是一个专业的编程助手。请用纯文本格式回答，不要使用Markdown。"
 ```
 
 ## 项目结构

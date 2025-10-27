@@ -9,16 +9,18 @@ import (
 
 // Config 表示配置文件结构
 type Config struct {
-	APIKey  string `json:"api_key"`
-	BaseURL string `json:"base_url"`
-	Model   string `json:"model"`
+	APIKey       string `json:"api_key"`
+	BaseURL      string `json:"base_url"`
+	Model        string `json:"model"`
+	SystemPrompt string `json:"system_prompt"`
 }
 
 // DefaultConfig 返回默认配置
 func DefaultConfig() *Config {
 	return &Config{
-		BaseURL: "https://api.deepseek.com",
-		Model:   "deepseek-chat",
+		BaseURL:      "https://api.deepseek.com",
+		Model:        "deepseek-chat",
+		SystemPrompt: "你是一个有用的AI助手。请仅使用纯文本格式回答，不要使用Markdown格式。使用换行来区分段落，保持回答简洁明了。",
 	}
 }
 
@@ -29,7 +31,7 @@ func GetConfigPath() (string, error) {
 		return "", fmt.Errorf("获取用户主目录失败: %v", err)
 	}
 
-	configDir := filepath.Join(homeDir, ".deepseek-cli")
+	configDir := filepath.Join(homeDir, ".xx")
 	if err := os.MkdirAll(configDir, 0755); err != nil {
 		return "", fmt.Errorf("创建配置目录失败: %v", err)
 	}
@@ -65,6 +67,9 @@ func LoadConfig() (*Config, error) {
 	}
 	if config.Model == "" {
 		config.Model = "deepseek-chat"
+	}
+	if config.SystemPrompt == "" {
+		config.SystemPrompt = "你是一个有用的AI助手。请仅使用纯文本格式回答，不要使用Markdown格式。使用换行来区分段落，保持回答简洁明了。"
 	}
 
 	return &config, nil
