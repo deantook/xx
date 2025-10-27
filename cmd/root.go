@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"xx/chat"
-	"xx/config"
+
+	"github.com/deantook/xx/chat"
+	"github.com/deantook/xx/config"
 
 	"github.com/spf13/cobra"
 )

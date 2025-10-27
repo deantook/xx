@@ -1,4 +1,4 @@
-module xx
+module github.com/deantook/xx
 
 go 1.25.1
 

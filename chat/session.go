@@ -2,8 +2,9 @@ package chat
 
 import (
 	"fmt"
-	"xx/client"
-	"xx/history"
+
+	"github.com/deantook/xx/client"
+	"github.com/deantook/xx/history"
 )
 
 // Session 表示一个对话会话

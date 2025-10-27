@@ -9,7 +9,8 @@ import (
 	"sort"
 	"strings"
 	"time"
-	"xx/client"
+
+	"github.com/deantook/xx/client"
 )
 
 // HistoryRecord 表示一条历史记录

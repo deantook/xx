@@ -1,7 +1,7 @@
 package main
 
 import (
-	"xx/cmd"
+	"github.com/deantook/xx/cmd"
 )
 
 func main() {
